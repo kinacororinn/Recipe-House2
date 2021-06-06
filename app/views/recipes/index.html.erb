@@ -1,0 +1,25 @@
+<% @recipes.each do |recipe| %>
+
+ <tr>タイトル
+  <td>
+    <%= link_to recipe.title, recipe_path(recipe) %>
+  </td>
+  </tr>
+  <tr>画像
+   <td>
+    <%= link_to recipe_path(recipe.id) do %>
+      <%= attachment_image_tag recipe, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+    <% end %>
+   </td>
+  </tr>
+  <tr>分量
+   <td>
+    <%= recipe.component %>
+   </td>
+  </tr>
+  <tr>作り方
+   <td>
+    <%= recipe.explanation %>
+   </td>
+  </tr>
+<% end %>

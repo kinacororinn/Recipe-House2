@@ -1,0 +1,15 @@
+<table class='table'>
+  <tr>画像
+    <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %></tr>
+  <tr>
+	  <th>ユーザー名</th>
+	  <th><%= @user.name %></th>
+  </tr>
+  <tr>
+	  <th>紹介文</th>
+	  <th><%= @user.introduction %></th>
+  </tr>
+  <tr>
+    <td><%= link_to '編集する', edit_user_path(@user.id), class: 'btn btn-primary' %></td>
+  </tr>
+

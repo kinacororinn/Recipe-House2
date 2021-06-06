@@ -1,0 +1,35 @@
+<h2 class="my-8"><span style="background-color:#EFEFEF">　　</span></h2>
+    <ul>
+     <table class="table mx-auto col-8">
+
+      <tr>
+       <td>写真
+      <%= attachment_image_tag(@recipe, :image, size: "60x60", fallback: "no_image.jpg") %>
+       </td>
+      </tr>
+      <tr>
+       <td>メニュー名</td>
+         <td>
+          <%= @recipe.title %>
+         </td>
+      </tr>
+      <tr>
+       <td>分量</td>
+         <td>
+          <%= @recipe.component %>
+         </td>
+      </tr>
+      <tr>
+       <td>作り方</td>
+        <td>
+         <%= @recipe.explanation %>
+        </td>
+      </tr>
+　　　　　<% if @recipe.user == current_user %>
+      <td><%= link_to '編集', edit_recipe_path(@recipe.id) , class: 'btn btn-success' %>
+          <%= link_to '削除する', recipe_path(@recipe.id), method: :delete, class: 'btn btn-primary' %></td>
+          <% end %>
+
+      </div>
+
+      </table>
