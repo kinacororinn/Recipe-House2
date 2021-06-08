@@ -2,6 +2,7 @@ class RecipesController < ApplicationController
   def index
     @favorite_recipes = Recipe.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
     @recipes = Recipe.limit(6).order(created_at: :desc)
+
     query = nil
     if params[:time] != nil
       query += "time <= " + params[:time]
@@ -48,7 +49,8 @@ class RecipesController < ApplicationController
     #category = Category.find(1)  # ここの処理はCategoryのcontrollerで作成できるようになったあと
     #@recipe.category = category # recipeのformでカテゴリーを選択できるようにしてフォームから保存できるようにする。
     @recipe.user = current_user
-    @recipe.save
+    @recipe.save!
+
     redirect_to recipes_path
   end
 
@@ -62,6 +64,6 @@ class RecipesController < ApplicationController
 
 
   def recipe_params
-    params.require(:recipe).permit(:image, :title, :component, :explanation, :category_id, :time)
+    params.require(:recipe).permit(:image, :title, :component, :explanation, :category_id,:time)
   end
 end

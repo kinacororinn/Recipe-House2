@@ -53,8 +53,8 @@
    <% if user_signed_in? %>
   　<div class="search_form">
      <%= form_with url: recipes_path, local: true, method: :get do |f| %>
-      <%= f.select :category_id, options_for_select([['和食'], ['洋食'],['中華料理'],['洋菓子']]), {include_blank: 'カテゴリー検索'} %>
-      <%= f.select :time, options_for_select([["30分以内"], ["1時間以内"],  ["1時間30分以内"], ["2時間以内"]]), {include_blank: '所要時間検索'} %>
+      <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: "カテゴリーを選択してください") %>
+      <%= f.select :time, Recipe.times.keys.to_a {} ,prompt: "時間を選択してください"%>
       <%= f.submit "検索", class: "btn btn-primary" %>
      <% end %>
     </div>
