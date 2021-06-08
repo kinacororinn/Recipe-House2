@@ -1,5 +1,5 @@
 <table class='table'>
-  <tr>画像
+  <tr>
     <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %></tr>
   <tr>
 	  <th>ユーザー名</th>
@@ -10,6 +10,138 @@
 	  <th><%= @user.introduction %></th>
   </tr>
   <tr>
-    <td><%= link_to '編集する', edit_user_path(@user.id), class: 'btn btn-primary' %></td>
+    <td>
+      <% if @user == current_user %>
+      <%= link_to '編集する', edit_user_path(@user.id), class: 'btn btn-success' %>
+      <% end %>
+    </td>
   </tr>
+  </table>
+
+  <%= link_to '投稿レシピ', user_path(@user.id), class: 'btn btn-primary' %>
+  <%= link_to 'いいねの多かった順', user_path(@user.id), class: 'btn btn-primary' %>
+  <%= link_to '自己評価の高い順', user_path(@user.id), class: 'btn btn-primary' %></br>
+  
+  
+　<h2>投稿レシピ</h2>
+  <% @recipes.each do |recipe| %>
+<table>
+ <tr>
+  <td>メニュー名
+    <%= link_to recipe.title, recipe_path(recipe) %>
+  </td>
+  </tr>
+  <tr>
+   <td>画像
+    <%= link_to user_path(recipe.user) do %>
+      <%= attachment_image_tag recipe, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+      <%= recipe.user.name %>
+    <% end %>
+   </td>
+  </tr>
+  <tr>
+   <td>分量
+    <%= recipe.component %>
+   </td>
+  </tr>
+  <tr>
+   <td>作り方
+    <%= recipe.explanation %>
+   </td>
+  </tr>
+  <tr>
+    <td>
+      <% if recipe.favorited_by?(current_user) %>
+        <p>
+          <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :delete, local: true do %>
+            ♥<%= recipe.favorites.count %>
+          <% end %>
+        </p>
+        <% else %>
+        <p>
+          <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :post, local: true do %>
+            ♡<%= recipe.favorites.count %>
+          <% end %>
+        </p>
+      <% end %>
+     </td>
+    </tr>
+     <td><%= link_to recipe_path(recipe) do %>
+     <i class="far fa-comment-dots"></i>
+      <% end %>
+      <%= recipe.recipe_comments.count %>
+     </td>
+    <tr>
+    <td>
+      <% if @user == current_user %>
+      <%= link_to '編集する', edit_recipe_path(recipe.id) , class: 'btn btn-success' %>
+      <%= link_to '削除する', recipe_path(recipe.id), method: :delete, class: 'btn btn-danger' %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<h2>いいねの多さランキング</h2>
+  <% @favorite_recipes.each do |favorite_recipe| %>
+<table>
+ <tr>
+  <td>メニュー名
+    <%= link_to favorite_recipe.title, recipe_path(favorite_recipe) %>
+  </td>
+  </tr>
+  <tr>
+   <td>画像
+    <%= link_to user_path(favorite_recipe.user) do %>
+      <%= attachment_image_tag favorite_recipe, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+      <%= favorite_recipe.user.name %>
+    <% end %>
+   </td>
+  </tr>
+  <tr>
+   <td>分量
+    <%= favorite_recipe.component %>
+   </td>
+  </tr>
+  <tr>
+   <td>作り方
+    <%= favorite_recipe.explanation %>
+   </td>
+  </tr>
+  <tr>
+    <td>
+      <% if favorite_recipe.favorited_by?(current_user) %>
+        <p>
+          <%= link_to recipe_favorites_path(recipe_id: favorite_recipe.id), method: :delete, local: true do %>
+            ♥<%= favorite_recipe.favorites.count %>
+          <% end %>
+        </p>
+        <% else %>
+        <p>
+          <%= link_to recipe_favorites_path(recipe_id: favorite_recipe.id), method: :post, local: true do %>
+            ♡<%= favorite_recipe.favorites.count %>
+          <% end %>
+        </p>
+      <% end %>
+     </td>
+    </tr>
+     <td><%= link_to recipe_path(favorite_recipe) do %>
+     <i class="far fa-comment-dots"></i>
+      <% end %>
+      <%= favorite_recipe.recipe_comments.count %>
+     </td>
+    <tr>
+    <td>
+      <% if @user == current_user %>
+      <%= link_to '編集する', edit_recipe_path(favorite_recipe.id) , class: 'btn btn-success' %>
+      <%= link_to '削除する', recipe_path(favorite_recipe.id), method: :delete, class: 'btn btn-danger' %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+
+
+
 

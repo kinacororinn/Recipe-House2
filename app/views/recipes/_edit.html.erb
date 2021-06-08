@@ -10,7 +10,6 @@
   <h4>作り方</h4>
   <%= f.text_area :explanation %>
   <%= f.submit '変更を保存' %>
-  <%= link_to '削除する', recipe_path(@recipe.id), method: :delete, class: 'btn btn-primary' %>
   <%#= カテゴリー作るまでコメントアウト　%>
   <%#= f.label :ジャンル %>
   <%#= form.select :category.genre, ['煮物', '料理', 'おやつ'], {include_blank: '---'} %>

@@ -1,25 +1,102 @@
-<% @recipes.each do |recipe| %>
+<%= link_to '投稿一覧', recipes_path, class: 'btn btn-primary' %>
+<%= link_to 'いいねの多かった順', recipes_path, class: 'btn btn-primary' %>
+<h1>いいねの多い順</h1>
+<% @favorite_recipes.each do |favorite_recipe| %>
+<table>
+ <tr>
+  <td>メニュー
+    <%= link_to favorite_recipe.title, recipe_path(favorite_recipe) %>
+  </td>
+  </tr>
+  <tr>
+   <td>画像
+    <%= link_to user_path(favorite_recipe.user) do %>
+      <%= attachment_image_tag favorite_recipe, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+    <% end %>
+   </td>
+  </tr>
+  <tr>
+   <td>分量
+    <%= favorite_recipe.component %>
+   </td>
+  </tr>
+  <tr>
+   <td>作り方
+    <%= favorite_recipe.explanation %>
+   </td>
+  </tr>
+  <tr>
+   <td><i class="far fa-heart"></i>
+   <%= favorite_recipe.favorites.count %>
+  </tr>
+  <tr>
+   <td><i class="far fa-comment-dots"></i>
+    <%= favorite_recipe.recipe_comments.count %>
+   </td>
+  </tr>
+  <tr>
+   <td>所要時間
+    <%= favorite_recipe.time %>
+   </td>
+  </tr>
+  <tr>
+   <td>投稿者名
+    <%= link_to user_path(favorite_recipe.user) do %>
+     <%= attachment_image_tag favorite_recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+     <%= favorite_recipe.user.name %>
+    <% end %>
+   </td>
+  </tr>
+<% end %>
+</table>
+<h1>新着レシピ</h1>
+<table>
 
- <tr>タイトル
-  <td>
+<% @recipes.each do |recipe| %>
+<table>
+ <tr>
+  <td>メニュー
     <%= link_to recipe.title, recipe_path(recipe) %>
   </td>
   </tr>
-  <tr>画像
-   <td>
-    <%= link_to recipe_path(recipe.id) do %>
+  <tr>
+   <td>画像
+    <%= link_to user_path(recipe.user) do %>
       <%= attachment_image_tag recipe, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
     <% end %>
    </td>
   </tr>
-  <tr>分量
-   <td>
+  <tr>
+   <td>分量
     <%= recipe.component %>
    </td>
   </tr>
-  <tr>作り方
-   <td>
+  <tr>
+   <td>作り方
     <%= recipe.explanation %>
    </td>
   </tr>
+  <tr>
+   <td><i class="far fa-heart"></i>
+   <%= recipe.favorites.count %>
+  </tr>
+  <tr>
+   <td><i class="far fa-comment-dots"></i>
+    <%= recipe.recipe_comments.count %>
+   </td>
+  </tr>
+  <tr>
+   <td>所要時間
+    <%= recipe.time %>
+   </td>
+  </tr>
+  <tr>
+   <td>投稿者名
+    <%= link_to user_path(recipe.user) do %>
+     <%= attachment_image_tag recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+     <%= recipe.user.name %>
+    <% end %>
+   </td>
+  </tr>
 <% end %>
+</table>

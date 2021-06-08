@@ -9,9 +9,17 @@
   <%= f.text_area :component %>
   <h4>作り方</h4>
   <%= f.text_area :explanation %>
+
+  <%= f.label :ジャンル %>
+  <%#= form.select :recipe.category_id, [['和食', 1], ['洋食', 2]], {}, { id: "category_id", class: "category_class" } %>
+  <%= f.select :category_id, [['和食',1],['洋食',2], ['中華料理',3],['洋菓子',4]], {include_blank: '選択してください'}, { id: "category_id", class: "category_class" } %>
+
+  <%#= form.select :recipe.category_id, [['和食', 1], ['洋食', 2]], {}, { id: "category_id", class: "category_class" } %>
+  <%= f.label :所要時間 %>
+  <%= f.select :time, ['30分以内', '1時間以内', '1時間30分以内','2時間以内'], {include_blank: '選択してください'}, { id: "time_id", class: "time_class" } %>
   <%= f.submit '投稿' %>
   <%#= カテゴリー作るまでコメントアウト　%>
   <%#= f.label :ジャンル %>
   <%#= form.select :category.genre, ['煮物', '料理', 'おやつ'], {include_blank: '---'} %>
-  
+
 <% end %>

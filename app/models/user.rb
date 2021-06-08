@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many:recipes, dependent: :destroy
   has_many:favorites, dependent: :destroy
+  has_many :favorited_recipes, through: :favorites, source: :recipe
   has_many:recipe_comments, dependent: :destroy
   attachment :profile_image, destroy: false
 end

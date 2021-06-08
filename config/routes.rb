@@ -9,6 +9,7 @@ Rails.application.routes.draw do
    resource :favorites, only: [:create, :destroy]
    resources :recipe_comments, only: [:index, :show, :edit, :update, :create, :destroy]
   end
+  resources :categories, only: [:index, :show, :edit, :update, :new, :create, :destroy]
   get 'favorites/create'
   get 'favorites/destroy'
   get 'homes/about'
