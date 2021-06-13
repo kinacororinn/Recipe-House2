@@ -10,5 +10,8 @@ class Recipe < ApplicationRecord
    favorites.where(user_id: user.id).exists?
   end
 
-  enum time: { "30分以内": 0, "1時間以内": 1, "1時間30分以内": 2 ,"2時間以内":3,"2時間以上":4}
+  validates :image, :title, :component, :explanation, :time, :category_id, presence: true
+ 
+
+  #enum time: { "30分以内": 0, "1時間以内": 1, "1時間30分以内": 2 ,"2時間以内":3,"2時間以上":4}
 end

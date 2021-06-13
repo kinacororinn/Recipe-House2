@@ -1,16 +1,37 @@
 <h1>メニュー編集</h1>
 <!-- form_with部分 -->
 <%= form_with model: recipe,local: true do |f| %>
-  <h4>画像</h4>
+
+  <div class="form-group">
+   <%= f.label :画像 %>
    <%= f.attachment_field :image %>
-  <h4>メニュー名</h4>
-  <%= f.text_field :title %>
-  <h4>分量</h4>
-  <%= f.text_area :component %>
-  <h4>作り方</h4>
-  <%= f.text_area :explanation %>
-  <%= f.submit '変更を保存' %>
-  <%#= カテゴリー作るまでコメントアウト　%>
-  <%#= f.label :ジャンル %>
-  <%#= form.select :category.genre, ['煮物', '料理', 'おやつ'], {include_blank: '---'} %>
+  </div>
+  
+  <div class="form-group">
+   <%= f.label :メニュー名 %>
+   <%= f.text_field :title %>
+  </div>
+  
+  <div class="form-group">
+   <%= f.label :分量 %>
+   <%= f.text_area :component %>
+  </div>
+  
+  <div class="form-group">
+   <%= f.label :作り方 %>
+   <%= f.text_area :explanation %>
+  </div>
+  
+  <div class="form-group">
+   <%= f.label :カテゴリー選択 %>
+   <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: "カテゴリーを選択してください") %>
+  </div>
+  
+  <div class="form-group">
+   <%= f.label :所要時間 %>
+   <%= f.text_area :time,class:"form-control" %>
+  </div>
+  
+  <%= f.submit '変更を保存', class: 'btn btn-success' %>
+
 <% end %>

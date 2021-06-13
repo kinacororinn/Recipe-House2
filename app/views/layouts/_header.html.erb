@@ -54,7 +54,8 @@
   　<div class="search_form">
      <%= form_with url: recipes_path, local: true, method: :get do |f| %>
       <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: "カテゴリーを選択してください") %>
-      <%= f.select :time, Recipe.times.keys.to_a {} ,prompt: "時間を選択してください"%>
+      <%#= f.select :time, Recipe.times.keys.to_a {} ,prompt: "時間を選択してください" %>
+      <%= f.select :time, [['30分以内',30],['60分以内',60], ['120分以内',120],['180分以内',180],['180分以上',"+180"]], {include_blank: '選択してください'}, { id: "time", class: "time_class" } %>
       <%= f.submit "検索", class: "btn btn-primary" %>
      <% end %>
     </div>

@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @recipes = @user.recipes
     @favorite_recipes = @recipes.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
+    @sort_type = params[:sort_type] ||= "post"
   end
 
   def edit

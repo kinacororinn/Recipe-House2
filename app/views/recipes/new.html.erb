@@ -1,27 +1,36 @@
 <h1>新規投稿</h1>
-<!-- form_with部分 -->
-<%= form_with model: @recipe,local: true do |f| %>
-  <h4>画像</h4>
-   <%= f.attachment_field :image %>
-  <h4>メニュー名</h4>
-  <%= f.text_field :title %>
-  <h4>分量</h4>
-  <%= f.text_area :component %>
-  <h4>作り方</h4>
-  <%= f.text_area :explanation %>
+ <!-- form_with部分 -->
+  <%= form_with model: @recipe,local: true do |f| %>
 
-  <%= f.label :カテゴリー %>
-  <%#= form.select :recipe.category_id, [['和食', 1], ['洋食', 2]], {}, { id: "category_id", class: "category_class" } %>
-  <%##= f.collection_select :name, Category.all, :id, :name, nil, prompt: "カテゴリーを選択してください" %>
-  <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: "カテゴリーを選択してください") %>
+   <div class="form-group">
+    <%= f.label :画像 %>
+    <%= f.attachment_field :image, class:"form-control" %>
+   </div>
 
-  <%#= form.select :recipe.category_id, [['和食', 1], ['洋食', 2]], {}, { id: "category_id", class: "category_class" } %>
-  <%= f.label :所要時間 %>
-  <%= f.select :time, Recipe.times.keys.to_a {} ,prompt: "時間を選択してください"%>
-  <%#= f.select :time, {include_blank: '選択してください'}, { id: "time_id", class: "time_class" } %>
-  <%= f.submit '投稿' %>
-  <%#= カテゴリー作るまでコメントアウト　%>
-  <%#= f.label :ジャンル %>
-  <%#= form.select :category.genre, ['煮物', '料理', 'おやつ'], {include_blank: '---'} %>
+   <div class="form-group">
+    <%= f.label :メニュー名 %>
+    <%= f.text_field :title, class:"form-control"%>
+   </div>
 
-<% end %>
+   <div class="form-group">
+    <%= f.label :分量 %>
+    <%= f.text_area :component, class:"form-control" %>
+   </div>
+
+   <div class="form-group">
+    <%= f.label :作り方 %>
+    <%= f.text_area :explanation, class:"form-control" %>
+   </div>
+
+   <div class="form-group">
+    <%= f.label :カテゴリー %>
+    <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: "カテゴリーを選択してください", class:"form-control" ) %>
+   </div>
+
+   <div class="form-group">
+    <%= f.label :所要時間 %>
+    <%= f.text_area :time,class:"form-control" %>
+   </div>
+
+   <%= f.submit '投稿する', class: 'btn btn-primary' %>
+  <% end %>
