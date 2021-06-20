@@ -1,36 +1,38 @@
+<div class="container">
 <h1>新規投稿</h1>
  <!-- form_with部分 -->
   <%= form_with model: @recipe,local: true do |f| %>
 
    <div class="form-group">
     <%= f.label :画像 %>
-    <%= f.attachment_field :image, class:"form-control" %>
+    <%= f.attachment_field :image %>
    </div>
 
    <div class="form-group">
     <%= f.label :メニュー名 %>
-    <%= f.text_field :title, class:"form-control"%>
+    <%= f.text_field :title %>
    </div>
 
    <div class="form-group">
     <%= f.label :分量 %>
-    <%= f.text_area :component, class:"form-control" %>
+    <%= f.text_area :component,:size=>"80x5" %>
    </div>
 
    <div class="form-group">
     <%= f.label :作り方 %>
-    <%= f.text_area :explanation, class:"form-control" %>
+    <%= f.text_area :explanation,:size=>"80x5" %>
    </div>
 
    <div class="form-group">
     <%= f.label :カテゴリー %>
-    <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: "カテゴリーを選択してください", class:"form-control" ) %>
+    <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: "カテゴリーを選択してください" ) %>
    </div>
 
    <div class="form-group">
     <%= f.label :所要時間 %>
-    <%= f.text_area :time,class:"form-control" %>
+    <%= f.text_field :time %>
    </div>
 
    <%= f.submit '投稿する', class: 'btn btn-primary' %>
   <% end %>
+  </div>

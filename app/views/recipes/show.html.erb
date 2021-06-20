@@ -1,38 +1,29 @@
-<h2 class="my-8"><span style="background-color:#EFEFEF">　　</span></h2>
-    <ul>
-     <table class="table mx-auto col-8">
+<div class="recipe-introduction">
 
-      <tr>
-       <td>写真
-      <td><%= link_to user_path(@recipe.user) do %>
-          <%= attachment_image_tag(@recipe, :image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
-          <%= @recipe.user.name %>
+　　<div class="recipe-introduction-title">
+      <h1><%= @recipe.title %></h1>
+    </div>
+
+     <div class="recipe-introduction-image">
+      <%= link_to user_path(@recipe.user) do %>
+          <%= attachment_image_tag(@recipe, :image, :fill, 350, 350, fallback: "no_image.jpg") %><br>
+          <!--<%= @recipe.user.name %>-->
           <% end %>
-        </td>
-       </td>
-      </tr>
-      <tr>
-       <td>メニュー名</td>
-         <td>
-          <%= @recipe.title %>
-         </td>
-      </tr>
-      <tr>
-       <td>分量</td>
-         <td>
-          <%= @recipe.component %>
-         </td>
-      </tr>
-      <tr>
-       <td>作り方</td>
-        <td>
+     </div>
+
+
+      <div class="recipe-introduction-component">
+       <h3>分量</h3>
+         <%= @recipe.component %>
+      </div>
+
+      <div class="recipe-introduction-introduction">
+       <h3>作り方</h3>
          <%= @recipe.explanation %>
-        </td>
-      </tr>
+       </div>
 
-
-      <tr>
-       <td><% if @recipe.favorited_by?(current_user) %>
+      <div class = "recipe-introduction-favorite" >
+       <% if @recipe.favorited_by?(current_user) %>
         <p>
           <%= link_to recipe_favorites_path(recipe_id: @recipe.id), method: :delete, local: true do %>
             ♥<%= @recipe.favorites.count %>
@@ -45,12 +36,10 @@
           <% end %>
         </p>
       <% end %>
-     </td>
-      <td>
      <i class="far fa-comment-dots"></i>
       <%= @recipe.recipe_comments.count %>
-     </td>
-    </tr>
+      </div>
+
 
           <% if @recipe.user == current_user %>
       <td><%= link_to '編集する', edit_recipe_path(@recipe.id) , class: 'btn btn-sm btn-success' %>
@@ -59,12 +48,15 @@
 
       </div>
 
-      </table>
+
+
+
+      <div class ="container">
       <% @recipe_comments.each do |recipe_comment| %>
       <tr id="recipe_comment-<%= recipe_comment.id %>">
 
         <td><%= link_to user_path(recipe_comment.user) do %>
-          <%= attachment_image_tag(recipe_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
+          <!--<%= attachment_image_tag(recipe_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>-->
           <%= recipe_comment.user.name %>
           <% end %>
         </td>
@@ -78,7 +70,8 @@
          </td>
       　　</tr>
  　　　　　 <% end %>
-　　　<div>
+　　　</div>
+　　　<div class ="container">
        <%= form_with(model:[@recipe,@recipe_comment],local: true, class: :"new-comment") do |f| %>
        <%= f.text_area :recipe_comment,:size=>"60x5"  %>
        <%= f.submit "コメントを作成する" , class: 'btn btn-primary' %>

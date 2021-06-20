@@ -5,28 +5,25 @@
 <!-- form_with部分 -->
 <%= form_with model: @user,local: true do |f| %>
 <table class="table">
- 
+
   <div class="form-group">
    <%= f.label :名前 %>
    <%= f.text_field :name %>
-  </div> 
-  
+  </div>
+
   <div class="form-group">
    <%= f.label :画像 %>
    <%= f.attachment_field :profile_image %>
   </div>
-  
+
   <div class="form-group">
-   <%= f.label :画像 %>
-   <%= f.text_field :introduction %>
+   <%= f.label :コメント %>
+   <%= f.text_area :introduction,:size=>"80x2" %>
   </div>
-  
-  <div class="row">
-  <div class="col-md-3 offset-md-6 mt-3">
+
+
   <%= f.submit '変更を保存' , class: 'btn btn-success'%>
-  <%#= カテゴリー作るまでコメントアウト　%>
-  <%#= f.label :ジャンル %>
-  <%#= form.select :category.genre, ['煮物', '料理', 'おやつ'], {include_blank: '---'} %>
+
 <% end %>
 </table>
 </div>

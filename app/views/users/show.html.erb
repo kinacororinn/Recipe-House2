@@ -6,7 +6,7 @@
 	  <th><%= @user.name %></th>
   </tr>
   <tr>
-	  <th>紹介文</th>
+	  <th>コメント</th>
 	  <th><%= @user.introduction %></th>
   </tr>
   <tr>
@@ -18,74 +18,70 @@
   </tr>
   </table>
 
+ <div class="container">
   <%= link_to '投稿レシピ', user_path(@user.id, sort_type: "post"), class: 'btn btn-primary' %>
-  <%= link_to 'いいねの多かった順', user_path(@user.id, sort_type: "favorite"), class: 'btn btn-primary' %>
-  <%= link_to '自己評価の高い順', user_path(@user.id, sort_type: "review"), class: 'btn btn-primary' %></br>
+  <%= link_to 'いいねの多かった順', user_path(@user.id, sort_type: "favorite"), class: 'btn btn-primary' %></br>
+ </div>
 
 <% if @sort_type == "post" %>
 
-　<h2>投稿レシピ</h2>
-  <% @recipes.each do |recipe| %>
+<h2>投稿レシピ</h2>
+<section class="user-recipe-menues">
+<% @recipes.each do |recipe| %>
 <table class= "d-inline-block ml-3 mr-3">
  <tr>
-  <td>メニュー名
+  <td>
     <%= link_to recipe.title, recipe_path(recipe) %>
   </td>
   </tr>
   <tr>
-   <td>画像
+   <td>
     <%= link_to user_path(recipe.user) do %>
-      <%= attachment_image_tag recipe, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-      <%= recipe.user.name %>
+      <%= attachment_image_tag recipe, :image, :fill, 160, 160, fallback: "no_image.jpg" %>
+      <!--<%= recipe.user.name %>-->
     <% end %>
    </td>
   </tr>
-  <tr>
-   <td>分量
-    <%= recipe.component %>
-   </td>
-  </tr>
-  <tr>
-   <td>作り方
-    <%= recipe.explanation %>
-   </td>
-  </tr>
+  <!--<tr>-->
+  <!-- <td>分量-->
+  <!--  <%= recipe.component %>-->
+  <!-- </td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!-- <td>作り方-->
+  <!--  <%= recipe.explanation %>-->
+  <!-- </td>-->
+  <!--</tr>-->
   <tr>
     <td>
       <% if recipe.favorited_by?(current_user) %>
-        <p>
           <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :delete, local: true do %>
           ♥<%= recipe.favorites.count %>
           <% end %>
-        </td>
         <% else %>
-        <p>
           <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :post, local: true do %>
           ♡<%= recipe.favorites.count %>
           <% end %>
-        </p>
         <% end %>
-     </td>
-    </tr>
-     <td><%= link_to recipe_path(recipe) do %>
+     <%= link_to recipe_path(recipe) do %>
      <i class="far fa-comment-dots"></i>
       <% end %>
       <%= recipe.recipe_comments.count %>
      </td>
+  <!--<tr>-->
+  <!-- <td>所要時間-->
+  <!--  <%= recipe.time %>分-->
+  <!-- </td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!-- <td>カテゴリー-->
+  <!--  <%= recipe.category.name %>-->
+  <!-- </td>-->
+  <!--</tr>-->
   <tr>
-   <td>所要時間
-    <%= recipe.time %>分
-   </td>
-  </tr>
-  <tr>
-   <td>カテゴリー
-    <%= recipe.category.name%>
-   </td>
-  </tr>
-  <tr>
-   <td>投稿者名
+   <td>投稿者:
     <%= link_to user_path(recipe.user) do %>
-     <%= attachment_image_tag recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+     <!--<%= attachment_image_tag recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>-->
      <%= recipe.user.name %>
     <% end %>
    </td>
@@ -98,75 +94,76 @@
       <% end %>
     </td>
   </tr>
-</table>
 <% end %>
-
+</table>
+</section>
 
 <% elsif @sort_type == "favorite" %>
 
-<h2>いいねの多さランキング</h2>
+
+<h2>いいねの多かった順</h2>
+<section class="user-recipe-menues">
   <% @favorite_recipes.each do |favorite_recipe| %>
 <table class= "d-inline-block ml-3 mr-3">
  <tr>
-  <td>メニュー名
+  <td>
     <%= link_to favorite_recipe.title, recipe_path(favorite_recipe) %>
   </td>
   </tr>
   <tr>
-   <td>画像
+   <td>
     <%= link_to user_path(favorite_recipe.user) do %>
-      <%= attachment_image_tag favorite_recipe, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-      <%= favorite_recipe.user.name %>
+      <%= attachment_image_tag favorite_recipe, :image, :fill, 160, 160, fallback: "no_image.jpg" %>
+      <!--<%= favorite_recipe.user.name %>-->
     <% end %>
    </td>
   </tr>
-  <tr>
-   <td>分量
-    <%= favorite_recipe.component %>
-   </td>
-  </tr>
-  <tr>
-   <td>作り方
-    <%= favorite_recipe.explanation %>
-   </td>
-  </tr>
+  <!--<tr>-->
+  <!-- <td>分量-->
+  <!--  <%= favorite_recipe.component %>-->
+  <!-- </td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!-- <td>作り方-->
+  <!--  <%= favorite_recipe.explanation %>-->
+  <!-- </td>-->
+  <!--</tr>-->
   <tr>
     <td>
       <% if favorite_recipe.favorited_by?(current_user) %>
-        <p>
+
           <%= link_to recipe_favorites_path(recipe_id: favorite_recipe.id), method: :delete, local: true do %>
             ♥<%= favorite_recipe.favorites.count %>
           <% end %>
-        </p>
+
         <% else %>
-        <p>
+
           <%= link_to recipe_favorites_path(recipe_id: favorite_recipe.id), method: :post, local: true do %>
             ♡<%= favorite_recipe.favorites.count %>
           <% end %>
-        </p>
+
       <% end %>
-     </td>
-    </tr>
-     <td><%= link_to recipe_path(favorite_recipe) do %>
+
+     <%= link_to recipe_path(favorite_recipe) do %>
      <i class="far fa-comment-dots"></i>
       <% end %>
       <%= favorite_recipe.recipe_comments.count %>
      </td>
     <tr>
-    <tr>
-     <td>所要時間
-      <%= favorite_recipe.time %>分
-     </td>
-    </tr>
-    <tr>
-     <td>カテゴリー
-      <%= favorite_recipe.category.name %>
-     </td>
-    </tr>
+    <!--<tr>-->
+    <!-- <td>所要時間-->
+    <!--  <%= favorite_recipe.time %>分-->
+    <!-- </td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!-- <td>カテゴリー-->
+    <!--  <%= favorite_recipe.category.name %>-->
+    <!-- </td>-->
+    <!--</tr>-->
   <tr>
-   <td>投稿者名
+   <td>投稿者:
     <%= link_to user_path(favorite_recipe.user) do %>
-     <%= attachment_image_tag favorite_recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+     <!--<%= attachment_image_tag favorite_recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>-->
      <%= favorite_recipe.user.name %>
     <% end %>
    </td>
@@ -182,6 +179,6 @@
 <% end %>
 
 <% end %>
-
+</section>
 
 

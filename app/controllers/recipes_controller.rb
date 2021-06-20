@@ -3,11 +3,11 @@ class RecipesController < ApplicationController
     # 検索ではないとき　ふつうのとき
     if params[:time].blank? && params[:category_id].blank?
       @favorite_recipes = Recipe.limit(4).includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
-      @new_recipes = Recipe.limit(4).reverse_order
+      @new_recipes = Recipe.limit(10).reverse_order
       return
     else
       # 検索するとき
- 
+
       if params[:category_id].present? && params[:time].present?
         if params[:time] == "+180"
           @recipes = Recipe.eager_load(:category).where('time >= ?', params[:time]).where(categories: {id: params[:category_id]})
@@ -32,7 +32,7 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find(params[:id])
-    @recipes = Recipe.all
+    @recipes = Recipe.limit(10)
     @recipe_comment = RecipeComment.new
     @recipe_comments = @recipe.recipe_comments
   end
