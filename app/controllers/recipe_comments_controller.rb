@@ -14,7 +14,7 @@ class RecipeCommentsController < ApplicationController
    @recipe_comment = RecipeComment.find(params[:id])
    @recipe = @recipe_comment.recipe
    if @recipe_comment.update(recipe_comment_params)
-      redirect_to recipe_path(@recipe)
+      redirect_to recipe_path(@recipe),notice: '更新が成功しました'
    else
       render "edit"
    end
@@ -25,10 +25,15 @@ class RecipeCommentsController < ApplicationController
     comment = RecipeComment.new(recipe_comment_params)
     comment.user_id = current_user.id
     comment.recipe_id = @recipe.id
-    comment.save
-    redirect_to recipe_path(@recipe)
+    if comment.save
+    redirect_to recipe_path(@recipe),notice: "コメントを作成しました"
     @recipe_comments = @recipe.recipe_comments
     @recipe_comment = RecipeComment.new
+    else
+    redirect_to recipe_path(@recipe),danger: "登録に失敗しました"
+    @recipe_comments = @recipe.recipe_comments
+    @recipe_comment = RecipeComment.new
+    end
   end
 
   def destroy

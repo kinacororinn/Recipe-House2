@@ -1,12 +1,18 @@
+<% if flash[:notice] %>
+ <%= flash[:notice] %>
+<% end %>
 
-<% if @recipes.present? %>
- <h1>検索結果</h1>
+  <% if @recipes.present? %>
+
+ <div class="container" "col-3">
+  <h2 class="row" >検索結果</h2>
+   </div>
 <section class="user-recipe-menues">
  <% @recipes.each do |recipe| %>
  <table class= "d-inline-block ml-3 mr-3">
   <tr>
-   <td>
-     <%= link_to recipe.title, recipe_path(recipe) %>
+   <td class="recipe-menu-title2">
+     <%= link_to recipe.title, recipe_path(recipe), class: "title-link" %>
    </td>
    </tr>
    <tr>
@@ -68,27 +74,33 @@
    </tr>
  <% end %>
  </table>
+ <%= paginate @recipes %>
 <% end %>
 
 <% if @favorite_recipes.present? %>
- <h1>いいねの多い順</h1>
+
+<div class="container" "col-3">
+  <h2 class="row" >いいねの多い順</h2>
+   </div>
  <section class="recipe-menu">
   <% @favorite_recipes.each do |favorite_recipe| %>
   <table class= "d-inline-block ml-3 mr-3">
   <tr>
    <td>
-     <%= link_to favorite_recipe.title, recipe_path(favorite_recipe) %>
+    <div class="recipe-menu-title">
+     <%= link_to favorite_recipe.title, recipe_path(favorite_recipe), class: "title-link" %>
+    </div>
    </td>
   </tr>
- <section class="recipe-image">
    <tr>
     <td>
-     <%= link_to user_path(favorite_recipe.user) do %>
+     <section class="recipe-image">
+     <%= link_to recipe_path(favorite_recipe) do %>
        <%= attachment_image_tag favorite_recipe, :image, :fill, 300, 300, fallback: "no_image.jpg" %>
      <% end %>
+     </section>
     </td>
    </tr>
-  </class>
    <!--<tr>-->
    <!-- <td>分量-->
    <!--  <%= favorite_recipe.component %>-->
@@ -145,24 +157,25 @@
  <% end %>
  </table>
 </section>
-
-</class>
 <% end %>
 
 <% if @new_recipes.present? %>
- <h1>新着レシピ</h1>
+
+ <div class="container" "col-3">
+  <h2 class="row" >新着レシピ</h2>
+  </div>
  <section class="new-recipe-menu">
  <% @new_recipes.each do |new_recipe| %>
 
  <table class= "d-inline-block ml-3 mr-3">
-  <!--<tr>-->
-  <!-- <td>メニュー-->
-  <!--   <%= link_to new_recipe.title, recipe_path(new_recipe) %>-->
-  <!-- </td>-->
-  <!-- </tr>-->
+  <tr>
+   <td class="recipe-menu-title2">
+     <%= link_to new_recipe.title, recipe_path(new_recipe),class: "title-link" %>
+   </td>
+   </tr>
    <tr>
     <td>
-     <%= link_to user_path(new_recipe.user) do %>
+     <%= link_to recipe_path(new_recipe) do %>
        <%= attachment_image_tag new_recipe, :image, :fill, 155, 155, fallback: "no_image.jpg" %>
      <% end %>
     </td>
@@ -219,8 +232,11 @@
    </tr>
  <% end %>
  </table>
+ </section>
+ <div class="pagination-box">
+ <%= paginate @new_recipes, class: "title-link" %>
+ </div>
 <% end %>
-
 
 
 

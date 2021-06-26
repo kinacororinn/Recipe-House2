@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @recipes = @user.recipes
+    @recipes = @user.recipes.limit(10).page(params[:page])
     @favorite_recipes = @recipes.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
     @sort_type = params[:sort_type] ||= "post"
   end
@@ -18,8 +18,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update(user_params)
-    redirect_to user_path(@user.id)
+    if @user.update(user_params)
+     redirect_to user_path(@user.id),notice: '更新が成功しました'
+    else
+     render "edit"
+    end
   end
 
   def user_params

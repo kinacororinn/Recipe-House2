@@ -1,14 +1,19 @@
+<% if flash[:notice] %>
+ <%= flash[:notice] %>
+<% end %>
+
+<% if flash[:danger] %>
+ <%= flash[:danger] %>
+<% end %>
 <div class="recipe-introduction">
 
 　　<div class="recipe-introduction-title">
-      <h1><%= @recipe.title %></h1>
+     <%= @recipe.title %>
     </div>
 
      <div class="recipe-introduction-image">
-      <%= link_to user_path(@recipe.user) do %>
           <%= attachment_image_tag(@recipe, :image, :fill, 350, 350, fallback: "no_image.jpg") %><br>
           <!--<%= @recipe.user.name %>-->
-          <% end %>
      </div>
 
 
@@ -23,22 +28,25 @@
        </div>
 
       <div class = "recipe-introduction-favorite" >
+       <tr>
        <% if @recipe.favorited_by?(current_user) %>
         <p>
-          <%= link_to recipe_favorites_path(recipe_id: @recipe.id), method: :delete, local: true do %>
+          <%= link_to recipe_favorites_path(recipe_id: @recipe.id), method: :delete, local: true, class: "recipe-menu-title" do %>
             ♥<%= @recipe.favorites.count %>
           <% end %>
         </p>
         <% else %>
         <p>
-          <%= link_to recipe_favorites_path(recipe_id: @recipe.id), method: :post, local: true do %>
+          <%= link_to recipe_favorites_path(recipe_id: @recipe.id), method: :post, local: true, class: "recipe-menu-title" do %>
             ♡<%= @recipe.favorites.count %>
           <% end %>
         </p>
       <% end %>
-     <i class="far fa-comment-dots"></i>
-      <%= @recipe.recipe_comments.count %>
       </div>
+       <div class="far fa-comment-dots recipe-menu-title-comment">
+        <%= @recipe.recipe_comments.count %>
+       </div>
+      </tr>
 
 
           <% if @recipe.user == current_user %>

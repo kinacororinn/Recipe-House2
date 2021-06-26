@@ -2,25 +2,26 @@ class RecipesController < ApplicationController
   def index
     # 検索ではないとき　ふつうのとき
     if params[:time].blank? && params[:category_id].blank?
-      @favorite_recipes = Recipe.limit(4).includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
-      @new_recipes = Recipe.limit(10).reverse_order
+      @favorite_recipes = Recipe.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
+      @favorite_recipes = Kaminari.paginate_array(@favorite_recipes).page(1).per(3)
+      @new_recipes = Recipe.limit(10).page(params[:page]).reverse_order
       return
     else
       # 検索するとき
 
       if params[:category_id].present? && params[:time].present?
         if params[:time] == "+180"
-          @recipes = Recipe.eager_load(:category).where('time >= ?', params[:time]).where(categories: {id: params[:category_id]})
+          @recipes = Recipe.eager_load(:category).where('time >= ?', params[:time]).where(categories: {id: params[:category_id]}).page(params[:page])
         else
-          @recipes = Recipe.eager_load(:category).where('time <= ?', params[:time]).where(categories: {id: params[:category_id]})
+          @recipes = Recipe.eager_load(:category).where('time <= ?', params[:time]).where(categories: {id: params[:category_id]}).page(params[:page])
         end
       elsif params[:category_id].present? && params[:time].blank?
-          @recipes = Recipe.eager_load(:category).where(categories: {id: params[:category_id]})
+          @recipes = Recipe.eager_load(:category).where(categories: {id: params[:category_id]}).page(params[:page])
       elsif  params[:category_id].blank? && params[:time].present?
         if params[:time] == "+180"
-          @recipes = Recipe.where('time >= ?', params[:time])
+          @recipes = Recipe.where('time >= ?', params[:time]).page(params[:page])
         else
-          @recipes = Recipe.where('time <= ?', params[:time])
+          @recipes = Recipe.where('time <= ?', params[:time]).page(params[:page])
         end
       else
       end
@@ -32,7 +33,7 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find(params[:id])
-    @recipes = Recipe.limit(10)
+    @recipes = Recipe.limit(10).page(params[:page])
     @recipe_comment = RecipeComment.new
     @recipe_comments = @recipe.recipe_comments
   end
@@ -48,7 +49,7 @@ class RecipesController < ApplicationController
   def update
     @recipe = Recipe.find(params[:id])
     if @recipe.update(recipe_params)
-      redirect_to recipes_path
+      redirect_to recipes_path,notice: '更新が成功しました'
     else
       render "edit"
     end
@@ -56,11 +57,12 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params)
-    #category = Category.find(1)  # ここの処理はCategoryのcontrollerで作成できるようになったあと
-    #@recipe.category = category # recipeのformでカテゴリーを選択できるようにしてフォームから保存できるようにする。
     @recipe.user = current_user
-    @recipe.save!
-    redirect_to recipes_path
+    if @recipe.save
+    redirect_to recipes_path,notice: "登録に成功しました"
+    else
+    render :new
+    end
   end
 
   def destroy

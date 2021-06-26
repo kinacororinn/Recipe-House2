@@ -1,10 +1,19 @@
+<% if @recipe_comment.errors.any? %>
+  <%= @recipe_comment.errors.count %>件のエラーが発生しました。
+  <% @recipe_comment.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
+<% end %>
+<div class="container">
 <h1>コメント編集</h1>
 <!-- form_with部分 -->
-<%= attachment_image_tag(@recipe, :image, :fill, 100, 100, fallback: "no_image.jpg") %>
+<%= attachment_image_tag(@recipe, :image, :fill, 300, 300, fallback: "no_image.jpg") %>
 
 <%= form_with model: @recipe_comment,url: recipe_recipe_comment_path(recipe: @recipe_comment_id) ,local: true do |f| %>
-  <h4>コメント</h4>
-  <%= f.text_area :recipe_comment %>
 
-  <%= f.submit '変更を保存' %>
+  <%= f.label :コメント %>
+  <%= f.text_area :recipe_comment,:size=>"40x2" %>
+
+  <%= f.submit '変更を保存' , class: 'btn btn-primary' %>
   <% end %>
+</div>

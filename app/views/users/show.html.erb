@@ -1,6 +1,13 @@
-<table class='table'>
+<% if flash[:notice] %>
+ <%= flash[:notice] %>
+<% end %>
+
+<table class="table2">
   <tr>
-    <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %></tr>
+    <th>
+     <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %>
+    </th>
+  </tr>
   <tr>
 	  <th>ユーザー名</th>
 	  <th><%= @user.name %></th>
@@ -10,11 +17,11 @@
 	  <th><%= @user.introduction %></th>
   </tr>
   <tr>
-    <td>
+    <th>
       <% if @user == current_user %>
       <%= link_to '編集する', edit_user_path(@user.id), class: 'btn btn-success' %>
       <% end %>
-    </td>
+    </th>
   </tr>
   </table>
 
@@ -25,18 +32,20 @@
 
 <% if @sort_type == "post" %>
 
-<h2>投稿レシピ</h2>
+<div class="container" "col-3">
+  <h2 class="row" >投稿レシピ</h2>
+   </div>
 <section class="user-recipe-menues">
 <% @recipes.each do |recipe| %>
 <table class= "d-inline-block ml-3 mr-3">
  <tr>
-  <td>
-    <%= link_to recipe.title, recipe_path(recipe) %>
+  <td class="recipe-menu-title2">
+    <%= link_to recipe.title, recipe_path(recipe),class: "title-link" %>
   </td>
   </tr>
   <tr>
    <td>
-    <%= link_to user_path(recipe.user) do %>
+    <%= link_to recipe_path(recipe) do %>
       <%= attachment_image_tag recipe, :image, :fill, 160, 160, fallback: "no_image.jpg" %>
       <!--<%= recipe.user.name %>-->
     <% end %>
@@ -94,20 +103,26 @@
       <% end %>
     </td>
   </tr>
+ </table>
 <% end %>
-</table>
+<div class="mx-auto">
+ <%= paginate @recipes, class: "title-link" %>
+ </div>
 </section>
 
 <% elsif @sort_type == "favorite" %>
 
 
-<h2>いいねの多かった順</h2>
+<div class="container" "col-3">
+  <h2 class="row" >いいねの多かった順</h2>
+  </div>
+
 <section class="user-recipe-menues">
   <% @favorite_recipes.each do |favorite_recipe| %>
 <table class= "d-inline-block ml-3 mr-3">
  <tr>
-  <td>
-    <%= link_to favorite_recipe.title, recipe_path(favorite_recipe) %>
+  <td class="recipe-menu-title2">
+    <%= link_to favorite_recipe.title, recipe_path(favorite_recipe),class: "title-link" %>
   </td>
   </tr>
   <tr>
@@ -177,7 +192,6 @@
   </tr>
 </table>
 <% end %>
-
 <% end %>
 </section>
 
