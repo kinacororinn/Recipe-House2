@@ -123,9 +123,11 @@
  display: flex;
  flex-wrap: wrap;
  align-content: space-around;
+ text-overflow: ellipsis;
+ max-width: 850px;
 }
 .recipe-comment-box2{
- margin-top: 20px;
+ margin-top: 5px;
  border-collapse: separate;
  border-spacing: 0 10px;
 }

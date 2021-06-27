@@ -30,7 +30,7 @@ class RecipeCommentsController < ApplicationController
     @recipe_comments = @recipe.recipe_comments
     @recipe_comment = RecipeComment.new
     else
-    redirect_to recipe_path(@recipe),danger: "登録に失敗しました"
+    redirect_to recipe_path(@recipe),notice: "コメント作成に失敗しました。100字以内で書いてください。"
     @recipe_comments = @recipe.recipe_comments
     @recipe_comment = RecipeComment.new
     end
