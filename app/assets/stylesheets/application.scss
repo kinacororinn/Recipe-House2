@@ -113,8 +113,23 @@
   align-content: space-around;
 }
 .container{
- text-align: center
+ text-align: center;
 }
+.recipe-comment-box{
+ width: 100%;
+ max-width: 1100px;
+ margin: 0 auto;
+ overflow: hidden;
+ display: flex;
+ flex-wrap: wrap;
+ align-content: space-around;
+}
+.recipe-comment-box2{
+ margin-top: 20px;
+ border-collapse: separate;
+ border-spacing: 0 10px;
+}
+
 .recipe-introduction{
   width: 100%;
   max-width: 950px;

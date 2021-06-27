@@ -67,8 +67,13 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find(params[:id])
+    @url = request.referer
     @recipe.destroy
-    redirect_to recipes_path
+    if @url.include?("users") #URLににusersが含まれているかどうか調べる
+     redirect_to user_path(@recipe.user.id)
+    else
+     redirect_to recipes_path
+    end
   end
 
   private

@@ -59,26 +59,30 @@
 
 
 
-      <div class ="container">
-      <% @recipe_comments.each do |recipe_comment| %>
-      <tr id="recipe_comment-<%= recipe_comment.id %>">
-
-        <td><%= link_to user_path(recipe_comment.user) do %>
-          <!--<%= attachment_image_tag(recipe_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>-->
-          <%= recipe_comment.user.name %>
+<div class ="recipe-comment-box">
+ <table class="recipe-comment-box2">
+    <% @recipe_comments.each do |recipe_comment| %>
+      <tr id="recipe_comment-<%= recipe_comment.id %>" class="recipe-comment-column">
+        <td>
+          <%= link_to user_path(recipe_comment.user) do %>
+            <!--<%= attachment_image_tag(recipe_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>-->
+            <%= recipe_comment.user.name %>
           <% end %>
         </td>
-         <td>
+        <td>
           <%= recipe_comment.recipe_comment %>
-         </td>
-         <td><% if recipe_comment.user == current_user %>
-             <%= link_to "編集する",edit_recipe_recipe_comment_path(@recipe.id, recipe_comment.id) , class: "btn btn-sm btn-success destroy_recipe_#{recipe_comment.id} " %>
-             <%= link_to "削除する",recipe_recipe_comment_path(@recipe.id, recipe_comment.id) , method: :delete, local: true, class: "btn btn-sm btn-danger destroy_recipe_#{recipe_comment.id} " %>
-             <% end %>
-         </td>
-      　　</tr>
- 　　　　　 <% end %>
-　　　</div>
+        </td>
+        <td>
+          <% if recipe_comment.user == current_user %>
+            <%= link_to "編集する",edit_recipe_recipe_comment_path(@recipe.id, recipe_comment.id) , class: "btn btn-sm btn-success destroy_recipe_#{recipe_comment.id} " %>
+            <%= link_to "削除する",recipe_recipe_comment_path(@recipe.id, recipe_comment.id) , method: :delete, local: true, class: "btn btn-sm btn-danger destroy_recipe_#{recipe_comment.id} " %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
 　　　<div class ="container">
        <%= form_with(model:[@recipe,@recipe_comment],local: true, class: :"new-comment") do |f| %>
        <%= f.text_area :recipe_comment,:size=>"60x5"  %>
