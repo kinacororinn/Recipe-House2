@@ -19,11 +19,11 @@
   <tr>
     <th>
       <% if @user == current_user %>
-      <%= link_to '編集する', edit_user_path(@user.id), class: 'btn btn-success' %>
+       <%= link_to '編集する', edit_user_path(@user.id), class: 'btn btn-success' %>
       <% end %>
     </th>
   </tr>
-  </table>
+</table>
 
  <div class="container">
   <%= link_to '投稿レシピ', user_path(@user.id, sort_type: "post"), class: 'btn btn-primary' %>
@@ -34,23 +34,24 @@
 
 <div class="container" "col-3">
   <h2 class="row" >投稿レシピ</h2>
-   </div>
+</div>
+
 <section class="user-recipe-menues">
-<% @recipes.each do |recipe| %>
-<table class= "d-inline-block ml-3 mr-3">
- <tr>
-  <td class="recipe-menu-title2">
-    <%= link_to recipe.title, recipe_path(recipe),class: "title-link" %>
-  </td>
-  </tr>
-  <tr>
-   <td>
-    <%= link_to recipe_path(recipe) do %>
+ <% @recipes.each do |recipe| %>
+  <table class= "d-inline-block ml-3 mr-3">
+   <tr>
+    <td class="recipe-menu-title2">
+     <%= link_to recipe.title, recipe_path(recipe),class: "title-link" %>
+    </td>
+   </tr>
+   <tr>
+    <td>
+     <%= link_to recipe_path(recipe) do %>
       <%= attachment_image_tag recipe, :image, :fill, 160, 160, fallback: "no_image.jpg" %>
       <!--<%= recipe.user.name %>-->
-    <% end %>
-   </td>
-  </tr>
+     <% end %>
+    </td>
+   </tr>
   <!--<tr>-->
   <!-- <td>分量-->
   <!--  <%= recipe.component %>-->
@@ -61,22 +62,22 @@
   <!--  <%= recipe.explanation %>-->
   <!-- </td>-->
   <!--</tr>-->
-  <tr>
+   <tr>
     <td>
       <% if recipe.favorited_by?(current_user) %>
-          <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :delete, local: true do %>
+        <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :delete, local: true do %>
           ♥<%= recipe.favorites.count %>
-          <% end %>
-        <% else %>
-          <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :post, local: true do %>
-          ♡<%= recipe.favorites.count %>
-          <% end %>
         <% end %>
-     <%= link_to recipe_path(recipe) do %>
-     <i class="far fa-comment-dots"></i>
+      <% else %>
+        <%= link_to recipe_favorites_path(recipe_id: recipe.id), method: :post, local: true do %>
+          ♡<%= recipe.favorites.count %>
+        <% end %>
       <% end %>
-      <%= recipe.recipe_comments.count %>
-     </td>
+      <%= link_to recipe_path(recipe) do %>
+       <i class="far fa-comment-dots"></i>
+      <% end %>
+       <%= recipe.recipe_comments.count %>
+    </td>
   <!--<tr>-->
   <!-- <td>所要時間-->
   <!--  <%= recipe.time %>分-->
@@ -87,27 +88,27 @@
   <!--  <%= recipe.category.name %>-->
   <!-- </td>-->
   <!--</tr>-->
-  <tr>
-   <td>投稿者:
-    <%= link_to user_path(recipe.user) do %>
-     <!--<%= attachment_image_tag recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>-->
-     <%= recipe.user.name %>
-    <% end %>
-   </td>
-  </tr>
-    <tr>
+   <tr>
+    <td>投稿者:
+     <%= link_to user_path(recipe.user) do %>
+      <!--<%= attachment_image_tag recipe.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>-->
+      <%= recipe.user.name %>
+     <% end %>
+    </td>
+   </tr>
+   <tr>
     <td>
       <% if @user == current_user %>
-      <%= link_to '編集する', edit_recipe_path(recipe.id) , class: 'btn btn-success' %>
-      <%= link_to '削除する', recipe_path(recipe.id), method: :delete, class: 'btn btn-danger' %>
+       <%= link_to '編集する', edit_recipe_path(recipe.id) , class: 'btn btn-success' %>
+       <%= link_to '削除する', recipe_path(recipe.id), method: :delete, class: 'btn btn-danger' %>
       <% end %>
     </td>
-  </tr>
- </table>
+   </tr>
+  </table>
 <% end %>
-<div class="mx-auto">
- <%= paginate @recipes, class: "title-link" %>
- </div>
+  <div class="mx-auto">
+   <%= paginate @recipes, class: "title-link" %>
+  </div>
 </section>
 
 <% elsif @sort_type == "favorite" %>
@@ -115,15 +116,15 @@
 
 <div class="container" "col-3">
   <h2 class="row" >いいねの多かった順</h2>
-  </div>
+</div>
 
 <section class="user-recipe-menues">
-  <% @favorite_recipes.each do |favorite_recipe| %>
-<table class= "d-inline-block ml-3 mr-3">
- <tr>
-  <td class="recipe-menu-title2">
+ <% @favorite_recipes.each do |favorite_recipe| %>
+  <table class= "d-inline-block ml-3 mr-3">
+  <tr>
+   <td class="recipe-menu-title2">
     <%= link_to favorite_recipe.title, recipe_path(favorite_recipe),class: "title-link" %>
-  </td>
+   </td>
   </tr>
   <tr>
    <td>
@@ -151,7 +152,7 @@
             ♥<%= favorite_recipe.favorites.count %>
           <% end %>
 
-        <% else %>
+      <% else %>
 
           <%= link_to recipe_favorites_path(recipe_id: favorite_recipe.id), method: :post, local: true do %>
             ♡<%= favorite_recipe.favorites.count %>
@@ -160,8 +161,8 @@
       <% end %>
 
      <%= link_to recipe_path(favorite_recipe) do %>
-     <i class="far fa-comment-dots"></i>
-      <% end %>
+      <i class="far fa-comment-dots"></i>
+     <% end %>
       <%= favorite_recipe.recipe_comments.count %>
      </td>
     <tr>
@@ -185,13 +186,17 @@
   </tr>
     <td>
       <% if @user == current_user %>
-      <%= link_to '編集する', edit_recipe_path(favorite_recipe.id) , class: 'btn btn-success' %>
-      <%= link_to '削除する', recipe_path(favorite_recipe.id), method: :delete, class: 'btn btn-danger' %>
+       <%= link_to '編集する', edit_recipe_path(favorite_recipe.id) , class: 'btn btn-success' %>
+       <%= link_to '削除する', recipe_path(favorite_recipe.id), method: :delete, class: 'btn btn-danger' %>
       <% end %>
     </td>
   </tr>
-</table>
+ </table>
 <% end %>
+
+<div class="mx-auto">
+ <%= paginate @favorite_recipes, class: "title-link" %>
+</div>
 <% end %>
 </section>
 

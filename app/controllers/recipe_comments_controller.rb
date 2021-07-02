@@ -26,13 +26,13 @@ class RecipeCommentsController < ApplicationController
     comment.user_id = current_user.id
     comment.recipe_id = @recipe.id
     if comment.save
-    redirect_to recipe_path(@recipe),notice: "コメントを作成しました"
-    @recipe_comments = @recipe.recipe_comments
-    @recipe_comment = RecipeComment.new
+     redirect_to recipe_path(@recipe),notice: "コメントを作成しました"
+     @recipe_comments = @recipe.recipe_comments
+     @recipe_comment = RecipeComment.new
     else
-    redirect_to recipe_path(@recipe),notice: "コメント作成に失敗しました。100字以内で書いてください。"
-    @recipe_comments = @recipe.recipe_comments
-    @recipe_comment = RecipeComment.new
+     redirect_to recipe_path(@recipe),notice: "コメント作成に失敗しました。100字以内で書いてください。"
+     @recipe_comments = @recipe.recipe_comments
+     @recipe_comment = RecipeComment.new
     end
   end
 

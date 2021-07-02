@@ -5,15 +5,16 @@
   <% end %>
 <% end %>
 <div class="container">
-<h1>コメント編集</h1>
-<!-- form_with部分 -->
-<%= attachment_image_tag(@recipe, :image, :fill, 300, 300, fallback: "no_image.jpg") %>
+ <h1>コメント編集</h1>
+  <!-- form_with部分 -->
+  <%= attachment_image_tag(@recipe, :image, :fill, 300, 300, fallback: "no_image.jpg") %>
 
-<%= form_with model: @recipe_comment,url: recipe_recipe_comment_path(recipe: @recipe_comment_id) ,local: true do |f| %>
+  <%= form_with model: @recipe_comment,url: recipe_recipe_comment_path(recipe: @recipe_comment_id) ,local: true do |f| %>
+   <div class="form-group">
+    <%= f.label :コメント %>
+    <%= f.text_area :recipe_comment,:size=>"40x2" %>
+   </div>
 
-  <%= f.label :コメント %>
-  <%= f.text_area :recipe_comment,:size=>"40x2" %>
-
-  <%= f.submit '変更を保存' , class: 'btn btn-primary' %>
+   <%= f.submit '変更を保存' , class: 'btn btn-primary' %>
   <% end %>
 </div>
