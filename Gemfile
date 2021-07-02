@@ -82,3 +82,6 @@ group :production do
 end
 
 gem 'rename'
+
+#日本語化
+gem 'rails-i18n'

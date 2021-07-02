@@ -74,7 +74,10 @@
    </tr>
  <% end %>
  </table>
- <%= paginate @recipes %>
+
+ <div class="pagination-box2">
+ <%= paginate @recipes, class: "title-link" %>
+ </div>
 <% end %>
 
 <% if @favorite_recipes.present? %>
